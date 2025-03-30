@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using RabbitMqNuget.Registration;
 using RabbitMqNuget.Testing;
 using Tests.Rabbitmq.Consumers;
 using Tests.Rabbitmq.Messages.Impl;
-using TestWebApplication;
 
 namespace Tests;
 
