@@ -11,15 +11,19 @@ public abstract class SecurityApplicationFactoryFixture<TStartup> : WebApplicati
         PfeSecureHost.AuthServiceProxyFactory = (_, _) => new TestAuthProxy();
     }
 
-    public HttpClient WithAdminAuth() => WithJwt(RoleConstants.AdminRole);
+    public HttpClient WithAdminAuth() => WithJwt(RoleConstants.AdminRole, "testUser");
 
-    public HttpClient WithClientAuth() => WithJwt(RoleConstants.Client);
+    public HttpClient WithAdminAuth(string username) => WithJwt(RoleConstants.AdminRole, username);
 
-    private HttpClient WithJwt(string role)
+    public HttpClient WithClientAuth() => WithJwt(RoleConstants.Client, "testUser");
+
+    public HttpClient WithClientAuth(string username) => WithJwt(RoleConstants.Client, username);
+
+    private HttpClient WithJwt(string role, string username)
     {
         var httpClient = CreateDefaultClient();
 
-        string jwt = JwtFactory.CreateJwtToken("testUser", role, RsaKeyStorage.Instance.RsaSecurityKey);
+        string jwt = JwtFactory.CreateJwtToken(username, role, RsaKeyStorage.Instance.RsaSecurityKey);
 
         httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwt.Trim()}");
 

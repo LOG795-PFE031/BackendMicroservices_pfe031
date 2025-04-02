@@ -46,6 +46,17 @@ namespace AuthNuget.Registration
                         ValidAudience = "pfe",
                     };
                 });
+
+           services.AddCors(options =>
+           {
+               options.AddDefaultPolicy(
+                   corsPolicyBuilder =>
+                   {
+                       corsPolicyBuilder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                   });
+           });
         }
 
         public static IHttpClientBuilder RegisterAuthClient(this IHttpClientBuilder clientBuilder)
