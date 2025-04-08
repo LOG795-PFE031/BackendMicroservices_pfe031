@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{A3FF49E9-48A3-44BF-936C-2AC83E982C79}"
 EndProject
@@ -10,6 +10,27 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{0BC81794-3000-4157-926B-AAD977673400}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServiceIntegrationTests", "AuthServiceIntegrationTests\AuthServiceIntegrationTests.csproj", "{514D8014-49F2-4A92-818B-34561508A120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Time", "Time\Time.csproj", "{EFED7F47-1388-4A7D-87C4-B891C268BAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio", "Portfolio\Portfolio.csproj", "{EF61F9F2-29E9-474C-B759-0400E333B34C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "News", "News\News.csproj", "{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock", "Stock\Stock.csproj", "{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsServiceIntegrationTests", "NewsServiceIntegrationTests\NewsServiceIntegrationTests.csproj", "{AF6D8367-510B-4553-B9FF-281C6BE51E13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioServiceIntegrationTests", "PortfolioServiceIntegrationTests\PortfolioServiceIntegrationTests.csproj", "{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeServiceIntegrationTests", "TimeServiceIntegrationTests\TimeServiceIntegrationTests.csproj", "{BFB22E1A-C239-468C-BD9C-D8131C118340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockServiceIntegrationTests", "StockServiceIntegrationTests\StockServiceIntegrationTests.csproj", "{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{4E3E954D-BFE8-411F-A2CE-15ABF1DAD697}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +46,38 @@ Global
 		{514D8014-49F2-4A92-818B-34561508A120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{514D8014-49F2-4A92-818B-34561508A120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{514D8014-49F2-4A92-818B-34561508A120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFED7F47-1388-4A7D-87C4-B891C268BAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFED7F47-1388-4A7D-87C4-B891C268BAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFED7F47-1388-4A7D-87C4-B891C268BAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFED7F47-1388-4A7D-87C4-B891C268BAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF61F9F2-29E9-474C-B759-0400E333B34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF61F9F2-29E9-474C-B759-0400E333B34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF61F9F2-29E9-474C-B759-0400E333B34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF61F9F2-29E9-474C-B759-0400E333B34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6D8367-510B-4553-B9FF-281C6BE51E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6D8367-510B-4553-B9FF-281C6BE51E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6D8367-510B-4553-B9FF-281C6BE51E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6D8367-510B-4553-B9FF-281C6BE51E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB22E1A-C239-468C-BD9C-D8131C118340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB22E1A-C239-468C-BD9C-D8131C118340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB22E1A-C239-468C-BD9C-D8131C118340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB22E1A-C239-468C-BD9C-D8131C118340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +85,13 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A3FF49E9-48A3-44BF-936C-2AC83E982C79} = {0BC81794-3000-4157-926B-AAD977673400}
 		{514D8014-49F2-4A92-818B-34561508A120} = {FFBC4197-15F4-445A-8BF2-F281E32C52B9}
+		{EFED7F47-1388-4A7D-87C4-B891C268BAF7} = {0BC81794-3000-4157-926B-AAD977673400}
+		{EF61F9F2-29E9-474C-B759-0400E333B34C} = {0BC81794-3000-4157-926B-AAD977673400}
+		{F4FB69AD-AE59-4356-9AF7-F778CBD77AF3} = {0BC81794-3000-4157-926B-AAD977673400}
+		{1A4BC9BD-214C-4F3B-813E-F7BCDB6F0D3F} = {0BC81794-3000-4157-926B-AAD977673400}
+		{AF6D8367-510B-4553-B9FF-281C6BE51E13} = {FFBC4197-15F4-445A-8BF2-F281E32C52B9}
+		{3FCA518F-CAC8-4E41-9DF7-0EC001B7FEA2} = {FFBC4197-15F4-445A-8BF2-F281E32C52B9}
+		{BFB22E1A-C239-468C-BD9C-D8131C118340} = {FFBC4197-15F4-445A-8BF2-F281E32C52B9}
+		{F79B3C8A-D66F-4FA0-A58E-6E3A08B2CE0C} = {FFBC4197-15F4-445A-8BF2-F281E32C52B9}
 	EndGlobalSection
 EndGlobal

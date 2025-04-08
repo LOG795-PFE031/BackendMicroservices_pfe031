@@ -53,35 +53,6 @@ public sealed class ApplicationFactoryFixture : SecurityApplicationFactoryFixtur
         });
     }
 
-    public async Task<HttpResponseMessage> SigninAsync(UserCredentials userCredentials)
-    {
-        var unauthorizedClient = CreateDefaultClient();
-
-        // Fetch public key from the server
-        var publicKeyResponse = await unauthorizedClient.GetFromJsonAsync<ServerPublicKey>("auth/publickey");
-
-        string pemPublicKey = publicKeyResponse.PublicKey;
-
-        using var rsa = RSA.Create();
-
-        rsa.ImportFromPem(pemPublicKey.ToCharArray());  // Import public key
-
-        // Serialize and encrypt the credentials
-        string serializedCredentials = JsonConvert.SerializeObject(userCredentials);
-        byte[] credentialsBytes = Encoding.UTF8.GetBytes(serializedCredentials);
-        byte[] encryptedData = rsa.Encrypt(credentialsBytes, RSAEncryptionPadding.OaepSHA256);
-
-        var encryptedCredentials = new EncryptedCredentials
-        {
-            EncryptedData = Convert.ToBase64String(encryptedData)
-        };
-
-        // Post encrypted credentials to the server
-        var response = await unauthorizedClient.PostAsJsonAsync("auth/signin", encryptedCredentials);
-
-        return response;
-    }
-
     public async Task InitializeAsync()
     {
         await _postgres.InitializeAsync();

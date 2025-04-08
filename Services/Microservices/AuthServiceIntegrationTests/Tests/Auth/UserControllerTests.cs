@@ -47,7 +47,7 @@ public class UserControllerTests
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         // Verify new login
-        var httpResponseMessage = await _applicationFactoryFixture.SigninAsync(new UserCredentials()
+        var httpResponseMessage = await _applicationFactoryFixture.CreateClient().PostAsJsonAsync("auth/signin", new UserCredentials()
         {
             Username = defaultAdmin.Value.Username,
             Password = passwordChangeDto.NewPassword
@@ -95,7 +95,7 @@ public class UserControllerTests
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var responseMessage = await _applicationFactoryFixture.SigninAsync(new UserCredentials()
+        var responseMessage = await _applicationFactoryFixture.CreateClient().PostAsJsonAsync("auth/signin", new UserCredentials()
         {
             Username = "newUser",
             Password = "secret"

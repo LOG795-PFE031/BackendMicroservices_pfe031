@@ -14,12 +14,24 @@ public sealed class AuthServiceProxy : IAuthServiceProxy
     internal AuthServiceProxy(Uri authServerBaseUrl, ILogger logger)
     {
         _logger = logger;
-        _httpClient = new HttpClient();
+        
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+
+        _httpClient = new HttpClient(handler);
         _httpClient.BaseAddress = authServerBaseUrl;
 
         _retryPolicy = Policy
             .Handle<HttpRequestException>()
-            .WaitAndRetryForeverAsync(retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            .WaitAndRetryForeverAsync(
+                sleepDurationProvider: _ => TimeSpan.FromSeconds(1),
+                onRetryAsync: (exception, _) =>
+                {
+                    logger.LogError(exception, "Retrying in 1 second");
+                    return Task.CompletedTask;
+                });
     }
 
     public async Task<ServerPublicKey> GetPublicKey()

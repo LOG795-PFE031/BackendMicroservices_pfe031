@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using static AuthNuget.Proxies.Impl.AuthServiceProxy;
 
 namespace AuthNuget.Registration;
@@ -20,25 +22,12 @@ public static class PfeSecureHost
             builder.AddConsole();
         });
 
-        var logger = loggerFactory.CreateLogger("Startup");
+        var logger = loggerFactory.CreateLogger<TStartup>();
 
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
-
-        var certs = new
-        {
-            Path = configuration["Certificate:Path"],
-            Password = configuration["Certificate:Password"]
-        };
-
-        if (certs == null)
-        {
-            logger.LogError("Certificate is not set");
-
-            throw new Exception("Certificate is not set");
-        }
 
         if (string.IsNullOrWhiteSpace(authServerPublicKey))
         {
@@ -60,6 +49,19 @@ public static class PfeSecureHost
 
         RsaPublicKeySecurityKeyConverter.Instance = new RsaPublicKeySecurityKeyConverter(authServerPublicKey);
 
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        string resourceName = $"{assembly.GetName().Name}.localhost.pfx";
+
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+
+        if (stream == null) throw new Exception("Certificate resource not found.");
+
+        byte[] buffer = new byte[stream.Length];
+        _ = stream.Read(buffer, 0, buffer.Length);
+
+        X509Certificate2 certificate = new X509Certificate2(buffer, "secret");
+
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
@@ -69,7 +71,7 @@ public static class PfeSecureHost
                         serverOptions.ListenAnyIP(8081,
                             listenOptions =>
                             {
-                                listenOptions.UseHttps(certs.Path, certs.Password);
+                                listenOptions.UseHttps(certificate);
                                 listenOptions.UseConnectionLogging();
                             });
                     });

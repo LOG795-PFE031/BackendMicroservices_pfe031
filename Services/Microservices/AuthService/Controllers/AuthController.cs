@@ -1,7 +1,5 @@
 using AuthNuget.Security;
 using AuthService.Dtos;
-using AuthService.Monads;
-using AuthService.Queries.Encryption;
 using AuthService.Queries.Jwt;
 using AuthService.Queries.Seedwork;
 using Microsoft.AspNetCore.Mvc;
@@ -28,17 +26,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("signin")]
-    public async Task<ActionResult> Login([FromBody] EncryptedCredentials encryptedCredentials)
+    public async Task<ActionResult> Login([FromBody] UserCredentials userCredentials)
     {
-        var decryptCredentials = new DecryptCredentials(encryptedCredentials.EncryptedData);
+        var createJwt = new GetJwtForCredentials(userCredentials.Username, userCredentials.Password);
 
-        var result = await _queryDispatcher.DispatchAsync<DecryptCredentials, UserCredentials>(decryptCredentials)
-            .BindAsync(async decryptedCredentials =>
-            {
-                var createJwt = new GetJwtForCredentials(decryptedCredentials.Username, decryptedCredentials.Password);
-
-                return await _queryDispatcher.DispatchAsync<GetJwtForCredentials, string>(createJwt, CancellationToken.None);
-            });
+        var result = await _queryDispatcher.DispatchAsync<GetJwtForCredentials, string>(createJwt, CancellationToken.None);
 
         if (result.IsSuccess()) return Ok(result.Content);
 
