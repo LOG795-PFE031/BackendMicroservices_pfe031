@@ -1,11 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AuthNuget.Http;
 using AuthNuget.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthNuget.Registration
@@ -14,7 +12,7 @@ namespace AuthNuget.Registration
     {
         public static void RegisterPfeAuthorization(this IServiceCollection services)
         {
-           services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,11 +44,27 @@ namespace AuthNuget.Registration
                         ValidAudience = "pfe",
                     };
                 });
+
+           services.AddCors(options =>
+           {
+               options.AddDefaultPolicy(
+                   corsPolicyBuilder =>
+                   {
+                       corsPolicyBuilder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                   });
+           });
         }
 
         public static IHttpClientBuilder RegisterAuthClient(this IHttpClientBuilder clientBuilder)
         {
-            return clientBuilder.AddHttpMessageHandler<AuthDelegatingHandler>();
+            return clientBuilder.AddHttpMessageHandler<AuthDelegatingHandler>()
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                    new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    });
         }
     }
 }

@@ -10,7 +10,7 @@
 	  <PackageOutputPath>..\..\LocalNugetFeed\</PackageOutputPath>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
-	  <Version>0.1.1</Version>
+	  <Version>0.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

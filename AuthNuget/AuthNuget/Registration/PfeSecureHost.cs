@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using static AuthNuget.Proxies.Impl.AuthServiceProxy;
 
 namespace AuthNuget.Registration;
@@ -13,47 +15,52 @@ public static class PfeSecureHost
 {
     internal static Func<Uri, ILogger, IAuthServiceProxy> AuthServiceProxyFactory { get; set; } = (uri, logger) => new AuthServiceProxy(uri, logger);
 
-    public static IHostBuilder Create<TStartup>(string[] args) where TStartup : class
+    public static IHostBuilder Create<TStartup>(string[] args, string authServerPublicKey = "") where TStartup : class
     {
         using var loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddConsole();
         });
 
+        var logger = loggerFactory.CreateLogger<TStartup>();
+
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
-        string? authServerUrl = configuration["ServiceUrls:AuthServer"];
-
-        var logger = loggerFactory.CreateLogger("Startup");
-
-        if (string.IsNullOrWhiteSpace(authServerUrl))
+        if (string.IsNullOrWhiteSpace(authServerPublicKey))
         {
-            logger.LogError("Auth server url is not set");
-         
-            throw new Exception("Auth server url is not set");
+            string? authServerUrl = configuration["ServiceUrls:AuthServer"];
+
+            if (string.IsNullOrWhiteSpace(authServerUrl))
+            {
+                logger.LogError("Auth server url is not set");
+
+                throw new Exception("Auth server url is not set");
+            }
+
+            IAuthServiceProxy authProxy = AuthServiceProxyFactory(new Uri(authServerUrl), logger);
+
+            ServerPublicKey publicKey = authProxy.GetPublicKey().Result;
+
+            authServerPublicKey = publicKey.PublicKey;
         }
 
-        var certs = new
-        {
-            Path = configuration["Certificate:Path"],
-            Password = configuration["Certificate:Password"]
-        };
+        RsaPublicKeySecurityKeyConverter.Instance = new RsaPublicKeySecurityKeyConverter(authServerPublicKey);
 
-        if (certs == null)
-        {
-            logger.LogError("Certificate is not set");
+        Assembly assembly = Assembly.GetExecutingAssembly();
 
-            throw new Exception("Certificate is not set");
-        }
+        string resourceName = $"{assembly.GetName().Name}.localhost.pfx";
 
-        IAuthServiceProxy authProxy = AuthServiceProxyFactory(new Uri(authServerUrl), logger);
+        using var stream = assembly.GetManifestResourceStream(resourceName);
 
-        ServerPublicKey publicKey = authProxy.GetPublicKey().Result;
+        if (stream == null) throw new Exception("Certificate resource not found.");
 
-        RsaPublicKeySecurityKeyConverter.Instance = new RsaPublicKeySecurityKeyConverter(publicKey.PublicKey);
+        byte[] buffer = new byte[stream.Length];
+        _ = stream.Read(buffer, 0, buffer.Length);
+
+        X509Certificate2 certificate = new X509Certificate2(buffer, "secret");
 
         return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
@@ -64,7 +71,7 @@ public static class PfeSecureHost
                         serverOptions.ListenAnyIP(8081,
                             listenOptions =>
                             {
-                                listenOptions.UseHttps(certs.Path, certs.Password);
+                                listenOptions.UseHttps(certificate);
                                 listenOptions.UseConnectionLogging();
                             });
                     });

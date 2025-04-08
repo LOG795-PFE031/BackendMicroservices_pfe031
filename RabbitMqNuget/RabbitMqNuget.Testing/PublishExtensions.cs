@@ -10,7 +10,7 @@ public static class PublishExtensions
 
     public static async Task<TMessage> WithMessagePublished<TMessage>(this IServiceProvider serviceProvider, TMessage message, Guid correlationId = default) where TMessage : class
     {
-        await using var scope = serviceProvider.CreateAsyncScope();
+        using var scope = serviceProvider.CreateScope();
 
         var transactionInfo = scope.ServiceProvider.GetRequiredService<ITransactionInfo>();
 

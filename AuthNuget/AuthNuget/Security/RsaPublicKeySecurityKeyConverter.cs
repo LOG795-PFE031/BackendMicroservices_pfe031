@@ -5,9 +5,9 @@ namespace AuthNuget.Security;
 
 internal sealed class RsaPublicKeySecurityKeyConverter
 {
-    public static RsaPublicKeySecurityKeyConverter? Instance { get; set; }
+    internal static RsaPublicKeySecurityKeyConverter? Instance { get; set; }
 
-    public RsaSecurityKey RsaSecurityKey { get; }
+    internal RsaSecurityKey RsaSecurityKey { get; }
 
     internal RsaPublicKeySecurityKeyConverter(string publicKey)
     {
