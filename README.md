@@ -12,7 +12,7 @@ run the following commands
 ```
 dotnet dev-certs https --clean
 dotnet dev-certs https --trust
-dotnet dev-certs https -ep ./Configuration/certs/localhost.pfx -p "secret"
+dotnet dev-certs https -ep ./AuthNuget/AuthNuget/localhost.pfx -p "secret"
 ```
 go in Configuration/certs/ manually and click on the localhost.pfx and install it on your system
 
