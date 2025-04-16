@@ -17,7 +17,13 @@ public sealed class QuoteConsumer : IConsumer<StockQuote>
     public async Task Consume(ConsumeContext<StockQuote> context)
     {
         var quote = context.Message;
-
-        await _commandDispatcher.DispatchAsync(new AddQuote(quote.Symbol, quote.Date, quote.Price));
+        await _commandDispatcher.DispatchAsync(new AddQuote(
+            quote.Symbol, 
+            quote.Date, 
+            quote.Price,
+            quote.ModelType,
+            quote.Confidence,
+            quote.ModelVersion
+        ));
     }
 }

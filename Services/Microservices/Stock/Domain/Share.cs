@@ -21,11 +21,11 @@ namespace Stock.Domain
         {
         }
 
-        public void AddQuote(DateTime day, decimal price)
+        public void AddQuote(DateTime day, decimal price, string modelType, decimal confidence, string modelVersion)
         {
             ImmutableInterlocked.Update(ref _quotes, list =>
             {
-                list = list.Add(new Quote(day.Date, price));
+                list = list.Add(new Quote(day.Date, price, modelType, confidence, modelVersion));
                 return list.OrderBy(quote => quote.Day).ToImmutableList();
             });
         }
@@ -52,9 +52,7 @@ namespace Stock.Domain
                 currentPriceIndex = firstFuture - 1;
             }
 
-            var quote = Quotes[currentPriceIndex];
-
-            return Result.Success(quote.Price);
+            return Result.Success(Quotes[currentPriceIndex].Price);
         }
     }
 }

@@ -30,7 +30,13 @@ public sealed class AddQuoteHandler : ICommandHandler<AddQuote>
                 await _repository.AddAsync(share);
             }
 
-            share.AddQuote(command.Day, command.Decimal);
+            share.AddQuote(
+                command.Date,
+                command.Price,
+                command.ModelType,
+                command.Confidence,
+                command.ModelVersion
+            );
 
             await _repository.UpdateAsync(share);
 
