@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Commands.Interfaces;
 using Portfolio.Domain;
+using Portfolio.Domain.ValueObjects;
 
 namespace Portfolio.Repositories;
 
@@ -14,10 +15,21 @@ public sealed class WalletContext : DbContext, IMigrateWalletContext
 
         modelBuilder.Entity<Wallet>(builder =>
         {
-            builder.HasKey(nameof(Wallet.Id));
-            builder.Ignore(wallet => wallet.DomainEvents);
-            builder.OwnsOne(w => w.Balance);
-            builder.OwnsMany(w => w.Shares);
+            builder.HasKey(w => w.Id);
+            builder.Ignore(w => w.DomainEvents);
+            builder.OwnsOne(w => w.Balance, b =>
+            {
+                b.Property(m => m.Value).HasColumnName("Balance");
+            });
+
+            builder.OwnsMany(w => w.Shares, s =>
+            {
+                s.ToTable("WalletShares");
+                s.WithOwner().HasForeignKey("WalletId");
+                s.HasKey("WalletId", nameof(ShareVolume.Symbol));
+                s.Property(v => v.Symbol).HasColumnName("Symbol");
+                s.Property(v => v.Volume).HasColumnName("Volume");
+            });
         });
     }
 

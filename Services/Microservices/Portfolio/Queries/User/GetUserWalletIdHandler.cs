@@ -1,15 +1,15 @@
 ﻿using Portfolio.Domain.Monads;
+using Portfolio.Proxies;
 using Portfolio.Proxies.Dtos;
-using Portfolio.Proxies.Impl;
 using Portfolio.Queries.Seedwork;
 
 namespace Portfolio.Queries.User;
 
 public sealed class GetUserWalletIdHandler : IQueryHandler<GetUserWalletId, string>
 {
-    private readonly AuthProxy _client;
+    private readonly IAuthProxy _client;
 
-    public GetUserWalletIdHandler(AuthProxy client)
+    public GetUserWalletIdHandler(IAuthProxy client)
     {
         _client = client;
     }

@@ -2,11 +2,11 @@
 
 namespace Portfolio.Proxies.Impl;
 
-public sealed class TimeProxy : ProxyBase, ITimeProxy
+public class TimeProxy : ProxyBase, ITimeProxy
 {
     public TimeProxy(HttpClient httpClient) : base("TimeService", httpClient) { }
 
-    public Task<CurrentTime?> GetCurrentTime()
+    public virtual Task<CurrentTime?> GetCurrentTime()
     {
         return GetAsync<CurrentTime>("time");
     }

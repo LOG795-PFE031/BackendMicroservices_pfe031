@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
 using AuthNuget.Registration;
 using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using News.Commands.Interfaces;

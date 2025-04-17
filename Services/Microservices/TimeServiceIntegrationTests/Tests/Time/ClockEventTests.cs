@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Json;
 using FluentAssertions;
-using RabbitMqNuget.Testing;
 using Time.Commands.TimeMultiplier;
 using Time.Domain.DomainEvents;
 using TimeServiceIntegrationTests.Infrastructure;

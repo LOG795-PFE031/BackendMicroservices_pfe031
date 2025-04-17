@@ -1,9 +1,10 @@
 ﻿using System.Net.Http.Json;
 using Bogus;
-using FakeItEasy;
 using FluentAssertions;
-using Portfolio.Proxies;
-using Portfolio.Proxies.Dtos;
+using Microsoft.Extensions.DependencyInjection;
+using Portfolio.Commands.Interfaces;
+using Portfolio.Domain;
+using Portfolio.Domain.ValueObjects;
 using Portfolio.Queries.ShareVolume;
 using PortfolioServiceIntegrationTests.Infrastructure;
 
@@ -25,13 +26,11 @@ public sealed class PortfolioControllerTests
         var fake = new Faker();
         var symbol = fake.Company.CompanyName();
 
-        var stockProxy = A.Fake<IStockProxy>();
-        var timeProxy = A.Fake<ITimeProxy>();
-        var authProxy = A.Fake<IAuthProxy>();
+        using var scope = _applicationFactoryFixture.Services.CreateScope();
 
-        A.CallTo(() => stockProxy.GetStockPrice(A<string>._, A<DateTime>._)).Returns(new StockPrice(1_000));
-        A.CallTo(() => timeProxy.GetCurrentTime()).Returns(new CurrentTime(DateTime.UtcNow));
-        A.CallTo(() => authProxy.GetWalletIdAsync()).Returns(new WalletId("I'm a fake wallet Id"));
+        var walletRepository = scope.ServiceProvider.GetRequiredService<IWalletRepository>();
+
+        await walletRepository.AddAsync(new Wallet("I'm a fake wallet Id", new Money(100_000), new List<ShareVolume>()));
 
         var client = _applicationFactoryFixture.WithAdminAuth();
 

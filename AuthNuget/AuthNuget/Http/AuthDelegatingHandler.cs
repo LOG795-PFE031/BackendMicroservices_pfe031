@@ -4,16 +4,16 @@ namespace AuthNuget.Http;
 
 public sealed class AuthDelegatingHandler : DelegatingHandler
 {
-    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly IHttpContextAccessor? _contextAccessor;
 
-    public AuthDelegatingHandler(IHttpContextAccessor contextAccessor)
+    public AuthDelegatingHandler(IHttpContextAccessor? contextAccessor)
     {
         _contextAccessor = contextAccessor;
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        if (_contextAccessor.HttpContext is null)
+        if (_contextAccessor?.HttpContext is null)
         {
             return await base.SendAsync(request, cancellationToken);
         }

@@ -4,7 +4,7 @@ services:
     hostname: auth-service
     image: auth-service
     ports:
-      - "8081"
+      - "55604:8081"
     build:
       context: .
       dockerfile: AuthService/Dockerfile
@@ -20,7 +20,7 @@ services:
     container_name: stock-service
     image: stock-service
     ports:
-      - "8081"
+      - "55611:8081"
     build:
       context: .
       dockerfile: Stock/Dockerfile
@@ -33,7 +33,7 @@ services:
     container_name: news-service
     image: news-service
     ports:
-      - "8081"
+      - "55613:8081"
     build:
       context: .
       dockerfile: News/Dockerfile
@@ -46,7 +46,7 @@ services:
     container_name: portfolio-service
     image: portfolio-service
     ports:
-      - "8081"
+      - "55616:8081"
     build:
       context: .
       dockerfile: Portfolio/Dockerfile
@@ -59,7 +59,7 @@ services:
     container_name: time-service
     image: time-service
     ports:
-      - "8081"
+      - "55623:8081"
     build:
       context: .
       dockerfile: Time/Dockerfile

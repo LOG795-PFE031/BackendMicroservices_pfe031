@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AuthNuget" Version="0.1.20" />
+    <PackageReference Include="AuthNuget" Version="0.1.22" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="MongoDB.Driver" Version="3.3.0" />
     <PackageReference Include="RabbitMqNuget" Version="0.1.1" />
