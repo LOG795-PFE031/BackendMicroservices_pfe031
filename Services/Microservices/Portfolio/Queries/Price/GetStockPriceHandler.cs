@@ -1,15 +1,15 @@
 ﻿using Portfolio.Domain.Monads;
+using Portfolio.Proxies;
 using Portfolio.Proxies.Dtos;
-using Portfolio.Proxies.Impl;
 using Portfolio.Queries.Seedwork;
 
 namespace Portfolio.Queries.Price;
 
 public sealed class GetStockPriceHandler : IQueryHandler<GetStockPrice, decimal>
 {
-    private readonly StockProxy _client;
+    private readonly IStockProxy _client;
 
-    public GetStockPriceHandler(StockProxy client)
+    public GetStockPriceHandler(IStockProxy client)
     {
         _client = client;
     }

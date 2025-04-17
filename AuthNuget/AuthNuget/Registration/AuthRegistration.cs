@@ -55,6 +55,9 @@ namespace AuthNuget.Registration
                            .AllowAnyHeader();
                    });
            });
+
+           services.AddHttpContextAccessor();
+           services.AddScoped<AuthDelegatingHandler>();
         }
 
         public static IHttpClientBuilder RegisterAuthClient(this IHttpClientBuilder clientBuilder)

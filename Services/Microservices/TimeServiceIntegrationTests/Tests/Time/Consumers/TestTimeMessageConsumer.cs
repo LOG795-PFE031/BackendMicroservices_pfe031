@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using RabbitMqNuget.Testing;
 using Time.Domain.DomainEvents;
 using TimeServiceIntegrationTests.Infrastructure;
 

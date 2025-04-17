@@ -1,15 +1,15 @@
 ﻿using Portfolio.Domain.Monads;
+using Portfolio.Proxies;
 using Portfolio.Proxies.Dtos;
-using Portfolio.Proxies.Impl;
 using Portfolio.Queries.Seedwork;
 
 namespace Portfolio.Queries.Time;
 
 public sealed class GetCurrentTimeHandler : IQueryHandler<GetCurrentTime, DateTime>
 {
-    private readonly TimeProxy _client;
+    private readonly ITimeProxy _client;
 
-    public GetCurrentTimeHandler(TimeProxy client)
+    public GetCurrentTimeHandler(ITimeProxy client)
     {
         _client = client;
     }

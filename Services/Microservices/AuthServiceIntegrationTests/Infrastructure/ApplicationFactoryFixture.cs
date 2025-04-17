@@ -1,16 +1,11 @@
 ﻿using AuthNuget.Testing;
 using AuthService;
 using AuthService.Commands.NewUser;
-using AuthService.Dtos;
 using AuthServiceIntegrationTests.Infrastructure.TestContainer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using RabbitMqNuget.Registration;
-using System.Net.Http.Json;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace AuthServiceIntegrationTests.Infrastructure;
 

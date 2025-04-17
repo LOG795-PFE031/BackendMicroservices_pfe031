@@ -17,7 +17,6 @@ namespace PortfolioServiceIntegrationTests.Infrastructure;
 public sealed class ApplicationFactoryFixture : SecurityApplicationFactoryFixture<Startup>, IAsyncLifetime
 {
     private readonly Postgres _postgres = new();
-    private readonly BackendServices _backendServices = new();
     private readonly Rabbitmq _rabbitmq = new();
 
     private readonly StockProxy _stockProxy = A.Fake<StockProxy>();
@@ -74,8 +73,6 @@ public sealed class ApplicationFactoryFixture : SecurityApplicationFactoryFixtur
     {
         await _postgres.InitializeAsync();
         await _rabbitmq.InitializeAsync();
-        await _backendServices.InitializeAsync();
-
     }
 
     public new async Task DisposeAsync()
@@ -84,6 +81,5 @@ public sealed class ApplicationFactoryFixture : SecurityApplicationFactoryFixtur
 
         await _postgres.DisposeAsync();
         await _rabbitmq.DisposeAsync();
-        await _backendServices.DisposeAsync();
     }
 }

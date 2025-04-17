@@ -88,6 +88,8 @@ public sealed class Startup
         {
             endpoints.MapControllers();
         });
+
+        app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<IMigrateWalletContext>().Migrate();
     }
 
     private void RegisterApplication(IServiceCollection collection)
@@ -115,15 +117,16 @@ public sealed class Startup
         collection.AddScoped<IStockProxy, StockProxy>();
         collection.AddScoped<ITimeProxy, TimeProxy>();
 
-        collection.AddScoped<IMigrateWalletContext, WalletContext>(provider => provider.GetRequiredService<WalletContext>());
-
         collection.AddScoped<ITransactionInfo, TransactionInfo>();
 
         collection.AddDbContext<WalletContext>(RepositoryDbContextOptionConfiguration);
 
+        collection.AddScoped<WalletRepository>();
+
+        collection.AddScoped<IMigrateWalletContext, WalletContext>(provider => provider.GetRequiredService<WalletContext>());
+
         collection.AddScoped<IWalletQueryContext, WalletRepository>(provider => provider.GetRequiredService<WalletRepository>());
         collection.AddScoped<IWalletRepository, WalletRepository>(provider => provider.GetRequiredService<WalletRepository>());
-        collection.AddScoped<WalletRepository>();
 
         collection.RegisterMassTransit(
             _configuration.GetConnectionString("Rabbitmq") ?? throw new InvalidOperationException("Rabbitmq connection string is not found"),

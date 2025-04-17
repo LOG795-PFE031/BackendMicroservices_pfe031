@@ -2,11 +2,11 @@
 
 namespace Portfolio.Proxies.Impl;
 
-public sealed class AuthProxy : ProxyBase, IAuthProxy
+public class AuthProxy : ProxyBase, IAuthProxy
 {
     public AuthProxy(HttpClient httpClient) : base("AuthService", httpClient) { }
 
-    public Task<WalletId?> GetWalletIdAsync()
+    public virtual Task<WalletId?> GetWalletIdAsync()
     {
         return GetAsync<WalletId>("user/wallet");
     }
