@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: AuthService/Dockerfile
     networks:
-      - auth
+      - microservices_auth
     depends_on:
       - postgres
       - mongo
@@ -25,7 +25,7 @@ services:
       context: .
       dockerfile: Stock/Dockerfile
     networks:
-      - auth
+      - microservices_auth
     depends_on:
       - auth-service
 
@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: News/Dockerfile
     networks:
-      - auth
+      - microservices_auth
     depends_on:
       -  auth-service
 
@@ -51,7 +51,7 @@ services:
       context: .
       dockerfile: Portfolio/Dockerfile
     networks:
-      - auth
+      - microservices_auth
     depends_on:
       - stock
 
@@ -64,7 +64,7 @@ services:
       context: .
       dockerfile: Time/Dockerfile
     networks:
-      - auth
+      - microservices_auth
     depends_on:
       - portfolio
 
@@ -79,7 +79,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - auth
+      - microservices_auth
 
   mongo:
     container_name: mongodb
@@ -91,7 +91,7 @@ services:
     ports:
      - "27017:27017"
     networks:
-      - auth
+      - microservices_auth
  
   azurite:
     container_name: azurite
@@ -102,7 +102,7 @@ services:
       - '10001:10001'
       - '10002:10002'
     networks:
-      - auth
+      - microservices_auth
 
   rabbitmq:
     container_name: rabbitmq
@@ -113,8 +113,8 @@ services:
       - '5672:5672'
       - '15672:15672'
     networks:
-      - auth
+      - microservices_auth
 
 networks:
-  auth:
+  microservices_auth:
     driver: bridge
