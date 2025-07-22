@@ -13,7 +13,7 @@ using Portfolio.Queries.User;
 
 namespace Portfolio.Controllers;
 
-[Authorize(Roles = $"{RoleConstants.Client}, {RoleConstants.AdminRole}")]
+// [Authorize(Roles = $"{RoleConstants.Client}, {RoleConstants.AdminRole}")]
 [ApiController]
 [Route("portfolio")]
 public sealed class PortfolioController : ControllerBase

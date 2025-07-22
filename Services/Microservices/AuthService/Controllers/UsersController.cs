@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Controllers;
 
-[Authorize(Roles = RoleConstants.AdminRole)]
+// [Authorize(Roles = RoleConstants.AdminRole)]
 [ApiController]
 [Route("users")]
 public sealed class UsersController : ControllerBase
