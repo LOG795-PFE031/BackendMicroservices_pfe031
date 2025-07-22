@@ -40,7 +40,7 @@ services:
     networks:
       - microservices_auth
     depends_on:
-      -  auth-service
+      - auth-service
 
   portfolio:
     container_name: portfolio-service
@@ -83,38 +83,39 @@ services:
 
   mongo:
     container_name: mongodb
-    image: 'mongo:8.0.5'
+    image: "mongo:8.0.5"
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo
     ports:
-     - "27017:27017"
+      - "27017:27017"
     networks:
       - microservices_auth
- 
+
   azurite:
     container_name: azurite
-    image: 'mcr.microsoft.com/azure-storage/azurite:latest'
+    image: "mcr.microsoft.com/azure-storage/azurite:latest"
     restart: always
     ports:
-      - '10000:10000'
-      - '10001:10001'
-      - '10002:10002'
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
     networks:
       - microservices_auth
 
   rabbitmq:
     container_name: rabbitmq
     hostname: rabbitmq
-    image: 'rabbitmq:3.13.7-management'
+    image: "rabbitmq:3.13.7-management"
     restart: always
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - microservices_auth
 
 networks:
   microservices_auth:
+    name: microservices_auth
     driver: bridge
